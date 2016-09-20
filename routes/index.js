@@ -14,6 +14,13 @@ router.get('/users/:name', function(req, res) {
 	res.render('index', {tweets: list});
 });
 
+router.get('/users/:name/:id', function(req, res) {
+  var id = req.params.id;
+  var name = req.params.name;
+  var list = tweetBank.find( {name: name, id: id});
+  res.render('index', {tweets: list});
+});
+
 
 // router.get('/stylesheets/:name', function(req, res, next) { //:name parameterizes 'name'
 

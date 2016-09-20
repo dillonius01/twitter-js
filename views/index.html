@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  
+
   <div class="page-header">
     <h1>Welcome to Twitter.js!</h1>
   </div>
@@ -12,23 +12,23 @@
       100 followers
     </div>
     <div class="col-md-9">
-    
+
       <!-- display tweets here -->
       <ul class='tweets'>
         {% for tweet in tweets %}
           <li class='tweetbox'>
             <a href="http://thecatapi.com"><img src="http://thecatapi.com/api/images/get?format=src&type=png"></a>
             <div class=tweettext>
-              <a href='users/{{tweet.name}}'>
+              <a href='/users/{{tweet.name}}'>
                 <p class='tweeter'>{{tweet.name}}</p>
               </a>
-              <p class='tweet'>{{tweet.content}}</p>
+              <p class='tweet'>{{tweet.content}}<a href='/users/{{tweet.name}}/{{tweet.id}}'><span> [Source]</span></a></p>
             </div>
           </li>
         {% endfor %}
       </ul>
-      
+
     </div>
   </div>
-    
+
 {% endblock %}
