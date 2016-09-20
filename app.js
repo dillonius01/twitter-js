@@ -2,6 +2,8 @@ var express = require('express');
 var morgan = require('morgan');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
+var socketio = require('socket.io');
+
 
 var app = express(); // creates instance of express application
 app.use(morgan('combined'));
@@ -12,12 +14,13 @@ app.set('view engine', 'html'); // tells res.render to work with html files
 
 //Middleware
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+
+var server = app.listen(3000);
+var io = socketio.listen(server);
 
 //Routes
 var routes = require('./routes');
-app.use('/', routes);
-
-
-app.listen(3000);
+app.use('/', routes(io));

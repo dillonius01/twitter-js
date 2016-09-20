@@ -78,5 +78,43 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+      var socket = io.connect();
+      socket.on('connect', function() {
+        console.log('connected to server via WebSockets!');
+      });
+
+      socket.on('newTweet', function(tweet) {
+        console.log(tweet);
+        
+        var twt = document.createElement('li');
+        twt.setAttribute('class', 'tweetbox');
+        twt.innerHTML = "<a href='http://thecatapi.com'><img src='http://thecatapi.com/api/images/get?format=src&type=png'></a>" +
+        "<div class=tweettext>" +
+        "<a href='/users/" + tweet.name + "'>" +
+        "<p class='tweeter'>" + tweet.name + "</p>" +
+        "</a><p class='tweet'>" + tweet.content + " <a href='/users/" + tweet.name + "/" + tweet.id + "'><span>[Source]</span></a></p></div>";
+
+
+
+
+        // <li class='tweetbox'>
+        //     <a href="http://thecatapi.com"><img src="http://thecatapi.com/api/images/get?format=src&type=png"></a>
+        //     <div class=tweettext>
+        //       <a href='/users/{{tweet.name}}'>
+        //         <p class='tweeter'>{{tweet.name}}</p>
+        //       </a>
+        //       <p class='tweet'>{{tweet.content}} <a href='/users/{{tweet.name}}/{{tweet.id}}'><span>[Source]</span></a></p>
+        //     </div>
+        //   </li>
+
+        //add tweet to DOM
+        var tweetList = document.getElementsByClassName('tweets')[0];
+        tweetList.insertBefore(twt, tweetList.childNodes[0]);
+
+      });
+  </script>
   </body>
 </html>

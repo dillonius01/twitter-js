@@ -3,7 +3,9 @@ var _ = require('lodash');
 var data = [];
 
 function add (name, content) {
-  data.unshift({ name: name, content: content, id: getId().toString() });
+  var newTweet = { name: name, content: content, id: getId().toString() };
+  data.unshift(newTweet);
+  return newTweet
 }
 
 function list () {
