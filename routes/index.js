@@ -5,20 +5,27 @@ var tweetBank = require('../tweetBank');
 
 router.get('/', function (req, res) {
   var tweets = tweetBank.list(); // why use cloneDeep here?
-  res.render( 'index', { tweets: tweets } );
+  res.render( 'index', { tweets: tweets, showForm: true } );
 });
 
 router.get('/users/:name', function(req, res) {
 	var name = req.params.name;
 	var list = tweetBank.find( {name: name});
-	res.render('index', {tweets: list});
+	res.render('index', {tweets: list, showForm: true, name: name });
 });
 
 router.get('/users/:name/:id', function(req, res) {
   var id = req.params.id;
   var name = req.params.name;
   var list = tweetBank.find( {name: name, id: id});
-  res.render('index', {tweets: list});
+  res.render('index', {tweets: list, showForm: true, name: name });
+});
+
+router.post('/tweets', function(req, res) {
+  var name = req.body.name;
+  var text = req.body.text;
+  tweetBank.add(name, text);
+  res.redirect(req.headers.referer);
 });
 
 
